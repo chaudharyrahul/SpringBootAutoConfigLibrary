@@ -1,37 +1,50 @@
-## Welcome to GitHub Pages
+## Welcome
 
-You can use the [editor on GitHub](https://github.com/chaudharyrahul/SpringBootAutoConfigLibrary/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+This sample app shows how to create Spring Boot auto configurable library
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Things to do to make library auto-configurable?
 
-### Markdown
+1. Create Configuration Class
+2. Add Component on one of the configuration file <br> 
+3. Create `spring.factories` file in `META-INF` folder under resources
+4. Add configuration classes to  `spring.factories` files as below
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+   `org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rc.spring.async.configuration.AsyncConfiguration`
+   (Comma Separated classes)
+
+5. Add library to apps classpath (for this example added dependancy as below)
+ 
+ ```
+ <dependency>
+     <groupId>com.rc.spring</groupId>
+     <artifactId>autoconfig</artifactId>
+     <version>1.0.0.0-SNAPSHOT</version>
+ </dependency>
+ ```
+6. Annotate methods that you want to Run Asynchronously with annotation `com.rc.spring.async.annotations.MyAsync` 
+7. We are ready with autoconfigurable library
+
+### Output of Sample application
 
 ```markdown
-Syntax highlighted code block
+2017-06-02 23:31:50.512  INFO 4528 --- [           main] com.rc.spring.app.AppMain                : Started AppMain in 5.934 seconds (JVM running for 6.771)
+2017-06-02 23:31:50.574  INFO 4528 --- [           main] com.rc.spring.app.service.TestService    : Running slowMethodWithoutAnnotation
+2017-06-02 23:31:53.576  INFO 4528 --- [           main] com.rc.spring.app.service.TestService    : Finished slowMethodWithoutAnnotation
+2017-06-02 23:31:53.576  INFO 4528 --- [           main] com.rc.spring.app.service.TestService    : Running slowMethodWithoutAnnotation
+2017-06-02 23:31:56.576  INFO 4528 --- [           main] com.rc.spring.app.service.TestService    : Finished slowMethodWithoutAnnotation
+2017-06-02 23:31:56.576  INFO 4528 --- [           main] com.rc.spring.app.service.TestService    : Running slowMethodWithoutAnnotation
+2017-06-02 23:31:59.576  INFO 4528 --- [           main] com.rc.spring.app.service.TestService    : Finished slowMethodWithoutAnnotation
+2017-06-02 23:31:59.587  INFO 4528 --- [ecutorDefault-1] com.rc.spring.app.service.TestService    : Running slowMethodWithAnnotationWithoutParam
+2017-06-02 23:31:59.588  INFO 4528 --- [ecutorDefault-2] com.rc.spring.app.service.TestService    : Running slowMethodWithAnnotationWithoutParam
+2017-06-02 23:31:59.588  INFO 4528 --- [ecutorDefault-3] com.rc.spring.app.service.TestService    : Running slowMethodWithAnnotationWithoutParam
+2017-06-02 23:31:59.588  INFO 4528 --- [    executor2-1] com.rc.spring.app.service.TestService    : Running slowMethodWithAnnotationWithParam
+2017-06-02 23:31:59.589  INFO 4528 --- [    executor2-2] com.rc.spring.app.service.TestService    : Running slowMethodWithAnnotationWithParam
+2017-06-02 23:31:59.590  INFO 4528 --- [    executor2-3] com.rc.spring.app.service.TestService    : Running slowMethodWithAnnotationWithParam
+2017-06-02 23:32:02.587  INFO 4528 --- [ecutorDefault-1] com.rc.spring.app.service.TestService    : Finished slowMethodWithAnnotationWithoutParam
+2017-06-02 23:32:02.588  INFO 4528 --- [ecutorDefault-2] com.rc.spring.app.service.TestService    : Finished slowMethodWithAnnotationWithoutParam
+2017-06-02 23:32:02.588  INFO 4528 --- [    executor2-1] com.rc.spring.app.service.TestService    : Finished slowMethodWithAnnotationWithParam
+2017-06-02 23:32:02.588  INFO 4528 --- [ecutorDefault-3] com.rc.spring.app.service.TestService    : Finished slowMethodWithAnnotationWithoutParam
+2017-06-02 23:32:02.589  INFO 4528 --- [    executor2-2] com.rc.spring.app.service.TestService    : Finished slowMethodWithAnnotationWithParam
+2017-06-02 23:32:02.590  INFO 4528 --- [    executor2-3] com.rc.spring.app.service.TestService    : Finished slowMethodWithAnnotationWithParam
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/chaudharyrahul/SpringBootAutoConfigLibrary/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
